@@ -88,7 +88,7 @@ class Scaffold extends Zuri implements Listener {
 		//if (!$event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, 2, 0))->isSolid() && !$event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, -2, 0))->isSolid() && $event->getPlayer()->getGamemode() !== GameMode::SPECTATOR()) return;
 
 		// impossible locations
-		if ($distance < 1.25 && abs($posPlayer->getPitch()) > 40) {
+		if ($distance < 1.25 && abs($posPlayer->getPitch()) < 40) {
 			$this->fail($player);
 		}
 		// debugging purposes:
