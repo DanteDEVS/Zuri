@@ -117,9 +117,9 @@ abstract class Zuri {
 		$player->kick(TF::GRAY . "Error: " . base64_encode($reason) . "==", Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $reason);
 	}
 
-	public function fail(Player $player) : void {
+	public function fail(Player $player, int $howmany = 1) : void {
 		if (!isset($this->failed[$player->getUniqueId()->__toString()][$this->flag])) {
-			$this->failed[$player->getUniqueId()->__toString()][$this->flag] = 1;
+			$this->failed[$player->getUniqueId()->__toString()][$this->flag] = $howmany;
 		}
 		if ($this->failed[$player->getUniqueId()->__toString()][$this->flag] > $this->getMaxViolation()) {
 			unset($this->failed[$player->getUniqueId()->__toString()][$this->flag]);
@@ -130,7 +130,7 @@ abstract class Zuri {
 		} else {
 			$this->notifyAdmins($player, false);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is suspected using " . $this->typeIdToString($this->flag) . "!");
-			$this->failed[$player->getUniqueId()->__toString()][$this->flag]++;
+			$this->failed[$player->getUniqueId()->__toString()][$this->flag] += $howmany;
 			if (!isset($this->lastFail[$player->getUniqueId()->__toString()][$this->flag])) {
 				$this->lastFail[$player->getUniqueId()->__toString()][$this->flag] = microtime(true);
 			}

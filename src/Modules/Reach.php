@@ -31,6 +31,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
 use Zuri\Zuri;
+use Zuri\Anticheat;
 
 class Reach extends Zuri implements Listener {
 	public const MAX_PLAYER_REACH = 8.1;

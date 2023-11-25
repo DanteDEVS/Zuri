@@ -92,7 +92,7 @@ class Scaffold extends Zuri implements Listener {
 			$this->fail($player);
 		}
 		// debugging purposes:
-		$player->sendMessage("distance: $distance, yaw: " . $player->getLocation()->getYaw() . ", pitch: " . abs($posPlayer->getPitch()));
+		//$player->sendMessage("distance: $distance, yaw: " . $player->getLocation()->getYaw() . ", pitch: " . abs($posPlayer->getPitch()));
 	}
 
 	public function ScaffoldV4(BlockPlaceEvent $event) : void {
