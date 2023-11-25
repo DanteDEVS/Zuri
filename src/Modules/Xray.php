@@ -27,8 +27,10 @@ namespace Zuri\Modules;
 use pocketmine\event\Listener;
 use Zuri\Zuri;
 
-class XTray extends Zuri implements Listener {
+class Xray extends Zuri implements Listener {
 	public function __construct() {
-		parent::__construct(Zuri::XTRAY);
+		parent::__construct(Zuri::XRAY);
 	}
+	
+	// TODO
 }

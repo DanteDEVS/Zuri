@@ -1,15 +1,39 @@
 ---
 # Zuri Anticheat Main Configuration
+# Zuri is an anticheat made to protect the server from any may unfair advantages from the players. Open-sourced project by ReinfyTeam.
+
+# Max Violation of the player to get kick.
 max-violation: 20
+# Custom permission for bypass of the anticheat.
 bypass-permission: zuri.bypass
+
+# AUTOCLICKER
+# Max clicks per seconds of the player.
 max-clicks: 30
+
+# SPEED
+# Max speed with sprint.
 max-speed: 0.9
+
+# HIGH JUMP
+# Max jump size of blocks.
 max-jump-blocks: 3
+
+# VPN/PROXY
+# Api key for vpnapi.io servers, Leave blank if you want to use limited requests.
 api-key: ""
+
+# REACH
+# Max reach for player based on their gamemodes.
 reach:
+   # Max player hit distance
    max-player-reach: 8.1
+  # Max player sqrt() distance
    max-player-reach-v2: 4.0
-   max-reach-distance-survival: 13
-   max-reach-distance-creative: 7
+  # Max reach block distance on survival.
+   max-reach-distance-survival: 7
+  # Max reach block distance on survival.
+   max-reach-distance-creative: 13
+  # Max reach block/entity interact distance.
    max-reach-distance-entity-interaction: 8
 ...
