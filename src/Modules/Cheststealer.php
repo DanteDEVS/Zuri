@@ -79,9 +79,9 @@ class Cheststealer extends Zuri implements Listener {
 		if ($timeOpenChest !== null && $countTransaction !== null) {
 			$timeDiff = microtime(true) - $timeOpenChest;
 			if ($timeDiff < $countTransaction / 3) {
-				$this->fail($player, 20);
+				$this->fail($player, 10);
 			} else {
-				$this->reward($player, 1);
+				$this->reward($player, 5);
 			}
 			unset($this->count[$player->getUniqueId()->getBytes()]);
 			unset($this->time[$player->getUniqueId()->getBytes()]);
