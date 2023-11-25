@@ -1,6 +1,7 @@
 # Zuri
 Zuri is an anticheat made to protect the server from any may unfair advantages from the players. A powerful anticheat made to destroy hackers from your server for PocketMine-MP.
 
+A demo video can be found [here](https://www.youtube.com/watch?v=zsHI5OqV1cs) for breif explanation how it is works.
 # TODO:
 * Improve Check
 * Discord Webhook Support
