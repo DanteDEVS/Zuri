@@ -1,0 +1,15 @@
+---
+# Zuri Anticheat Main Configuration
+max-violation: 20
+bypass-permission: zuri.bypass
+max-clicks: 30
+max-speed: 0.9
+max-jump-blocks: 3
+api-key: ""
+reach:
+   max-player-reach: 8.1
+   max-player-reach-v2: 4.0
+   max-reach-distance-survival: 13
+   max-reach-distance-creative: 7
+   max-reach-distance-entity-interaction: 8
+...
