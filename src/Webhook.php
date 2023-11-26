@@ -159,7 +159,7 @@ class Webhook {
 	}
 	
 	public function format(string $text, array $replacements) :string{
-		$text = str_replace($text, array_keys($relacements), array_values($replacements), $text);
+		$text = str_replace(array_keys($relacements), array_values($replacements), $text);
 		
 		return $text;
 	}

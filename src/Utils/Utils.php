@@ -40,12 +40,14 @@ class Utils {
 	}
 	
 	public static function formatVariable(string $text, array $replacements) :string{
-		$text = str_replace($text, array_keys($relacements), array_values($replacements), $text);
+		$text = str_replace(array_keys($relacements), array_values($replacements), $text);
 		
 		return $text;
 	}
 	
 	public function textToHex(string $hex) {
-		//TODO
+		$hex = str_replace("#", "", $hex);
+		
+		return 00 . "x" . strtoupper($hex);
 	}
 }
