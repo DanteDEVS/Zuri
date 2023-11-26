@@ -1,0 +1,83 @@
+---
+# Zuri Discord Webhook Configuration
+
+# Webhook Information: The url of the webhook created in discord. Please refer to wiki on github on how to setup discord webhook and get the url.
+webhook-info:
+    name: "Zuri Anticheat"
+    url: ""
+    avatar_url: ""
+    alwaysMentionEveryone: false
+    mention_users:
+        enabled: false
+        value:
+            - "" # UserId
+    mention_roles:
+        enabled: false
+        value:
+            - "" # RoleId
+
+
+# Webhook Structure: Here's the beginning of the structure on the embed.
+warn:
+    message:
+        enabled: false
+        value: "Anticheat Warning!!"
+    embed:
+        timestamp: true
+        image:
+            enabled: false
+            value: ""
+        author:
+            enabled: false
+            value: "Zuri Anticheat by ReinfyTeam"
+        enabled: true
+        color: 
+            enabled: true
+            value: "00FFFF"
+        title:
+            enabled: true
+            value: "**Zuri Anticheat**"
+        description:
+            enabled: true
+            value:
+                - "```"
+                - "{player_name} is suspected using {module_name}!"
+                - "```"
+         footer:
+            enabled: true
+            icon_url:
+                enabled: false
+                value: ""
+            value: "Zuri Anticheat made by ReinfyTeam"
+warn:
+    message:
+        enabled: false
+        value: "Anticheat Warning!!"
+    embed:
+        timestamp: true
+        image:
+            enabled: false
+            value: ""
+        author:
+            enabled: false
+            value: "Zuri Anticheat by ReinfyTeam"
+        enabled: true
+        color: 
+            enabled: true
+            value: "FF0000"
+        title:
+            enabled: true
+            value: "**Zuri Anticheat**"
+        description:
+            enabled: true
+            value:
+                - "```"
+                - "{player_name} is kicked for suspected using {module_name}!"
+                - "```"
+         footer:
+            enabled: true
+            icon_url:
+                enabled: false
+                value: ""
+            value: "Zuri Anticheat made by ReinfyTeam"
+... 

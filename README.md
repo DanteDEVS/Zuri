@@ -1,6 +1,8 @@
 # Zuri
 Zuri is an anticheat made to protect the server from any may unfair advantages from the players. A powerful anticheat made to destroy hackers from your server for PocketMine-MP.
 
+- **Proxy/VPN** is under of [vpnapi.io](https://vpnapi.io/) service. [AntiVPN](https://github.com/ReinfyTeam/AntiVPN) is migrated here in the project, so this may block plugin to prevent duplicate requests.
+
 # TODO:
 * Improve Check
 * Discord Webhook Support

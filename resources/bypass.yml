@@ -1,6 +1,9 @@
 ---
 # Zuri Anticheat Bypass Configuration
+
+# List of bypassed players.
 bypassed-players:
     - "xqwtxon"
+# List of bypassed ip on PROXY/VPN Check.
 bypass-ip: []
 ...

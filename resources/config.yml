@@ -22,13 +22,15 @@ max-jump-blocks: 3
 # VPN/PROXY
 # Api key for vpnapi.io servers, Leave blank if you want to use limited requests.
 api-key: ""
+# Kick message if they are using Proxy.
+proxy-kick-msg: "&cProxy/VPN is not allowed here."
 
 # REACH
 # Max reach for player based on their gamemodes.
 reach:
    # Max player hit distance
    max-player-reach: 8.1
-  # Max player sqrt() distance
+  # Max player sqrt() hit distance
    max-player-reach-v2: 4.0
   # Max reach block distance on survival.
    max-reach-distance-survival: 7
@@ -36,4 +38,8 @@ reach:
    max-reach-distance-creative: 13
   # Max reach block/entity interact distance.
    max-reach-distance-entity-interaction: 8
+
+# Discord Webhook
+# Do you want to send reports on discord? It can be configure on webhook.yml.
+discord-webhook: true
 ...

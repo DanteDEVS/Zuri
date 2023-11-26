@@ -56,6 +56,12 @@ class Anticheat extends PluginBase {
 		Zuri::load();
 		$this->register($this->getConfig()->get("bypass-Permission", "zuri.bypass"), Anticheat::OPERATOR);
 		$this->getServer()->getCommandMap()->register($this->getDescription()->getName(), new ZuriCommand());
+		
+		// duplicates: AntiVPN plugin by ReinfyTeam
+		if(($plugin = $this->getServer()->getPluginManager()->getPlugin("AntiVPN")) !== null){
+			$this->getServer()->getPluginManager()->disablePlugin($plugin);
+			$this->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $plugin->getDescription()->getFullName() . " has been disabled to prevent duplicate proxy api request.");
+		}
 	}
 
 	public const USER = 0;

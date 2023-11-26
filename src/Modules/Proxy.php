@@ -76,7 +76,7 @@ class Proxy extends Zuri implements Listener {
 							if (($player = Anticheat::getInstance()->getServer()->getPlayerExact($username)) !== null && $player->isOnline() && $player->spawned) {
 								Anticheat::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player) {
 									$this->fail($player);
-									$this->kick($player, $this->typeToReasonString($this->getFlagId()));
+								$player->kick(Utils::colorFormat(Anticheat::getInstance()->getConfig()->get("proxy-kick-msg", "&cProxy/VPN is not allowed here.")), Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is kicked for suspected using " . $this->typeIdToString($this->flag));
 								}), 2);
 								return;
 							}
