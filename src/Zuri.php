@@ -165,22 +165,21 @@ abstract class Zuri {
 						$staff->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is suspected using " . $this->typeIdToString($this->flag) . "!");
 					}
 				}
-				
-				if(Anticheat::getInstance()->getConfig()->get("discord-webhook") === true){
-					if($punish){
-						if(is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)){
+
+				if (Anticheat::getInstance()->getConfig()->get("discord-webhook") === true) {
+					if ($punish) {
+						if (is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)) {
 							Anticheat::getInstance()->webhook->sendEmbed($p->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING);
 						} else {
 							Anticheat::getInstance()->webhook->sendEmbed($player->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING);
 						}
 					} else {
-						if(is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)){
+						if (is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)) {
 							Anticheat::getInstance()->webhook->sendEmbed($p->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_KICK);
 						} else {
 							Anticheat::getInstance()->webhook->sendEmbed($player->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_KICK);
 						}
 					}
-					
 				};
 			}
 		}
