@@ -33,7 +33,7 @@ warn:
         enabled: true
         color: 
             enabled: true
-            value: "00FFFF"
+            value: "FFFF00"
         title:
             enabled: true
             value: "**Zuri Anticheat**"

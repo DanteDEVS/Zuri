@@ -2,28 +2,21 @@
 
 /*
  *
- *       _____      _     _      __  __  _____
- *      |  __ \    (_)   | |    |  \/  |/ ____|
- *      | |__) | __ _  __| | ___| \  / | |
- *      |  ___/ '__| |/ _` |/ _ \ |\/| | |
- *      | |   | |  | | (_| |  __/ |  | | |____
- *      |_|   |_|  |_|\__,_|\___|_|  |_|\_____|
- *            A minecraft bedrock server.
+ *  ____           _            __           _____
+ * |  _ \    ___  (_)  _ __    / _|  _   _  |_   _|   ___    __ _   _ __ ___
+ * | |_) |  / _ \ | | | '_ \  | |_  | | | |   | |    / _ \  / _` | | '_ ` _ \
+ * |  _ <  |  __/ | | | | | | |  _| | |_| |   | |   |  __/ | (_| | | | | | | |
+ * |_| \_\  \___| |_| |_| |_| |_|    \__, |   |_|    \___|  \__,_| |_| |_| |_|
+ *                                   |___/
  *
- *      This project and it’s contents within
- *     are copyrighted and trademarked property
- *   of PrideMC Network. No part of this project or
- *    artwork may be reproduced by any means or in
- *   any form whatsoever without written permission.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  Copyright © PrideMC Network - All Rights Reserved
- *                     Season #5
+ * @author ReinfyTeam
+ * @link https://github.com/ReinfyTeam/
  *
- *  www.mcpride.tk                 github.com/PrideMC
- *  twitter.com/PrideMC         youtube.com/c/PrideMC
- *  discord.gg/PrideMC           facebook.com/PrideMC
- *               bit.ly/JoinInPrideMC
- *  #PrideGames                           #PrideMonth
  *
  */
 
@@ -39,19 +32,19 @@ class Webhook {
 	/** @var string */
 	protected $url;
 
-	public function __construct(string $url){
+	public function __construct(string $url) {
 		$this->url = $url;
 	}
 
-	public function getURL() : string{
+	public function getURL() : string {
 		return $this->url;
 	}
 
-	public function isValid() : bool{
+	public function isValid() : bool {
 		return filter_var($this->url, FILTER_VALIDATE_URL) !== false;
 	}
 
-	public function send(Message $message) : void{
+	public function send(Message $message) : void {
 		Curl::postRequest($this->getURL(), json_encode($message), 10, ["Content-Type: application/json"]);
 	}
 }

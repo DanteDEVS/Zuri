@@ -31,6 +31,6 @@ class Xray extends Zuri implements Listener {
 	public function __construct() {
 		parent::__construct(Zuri::XRAY);
 	}
-	
+
 	// TODO
 }

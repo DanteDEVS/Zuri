@@ -44,11 +44,14 @@ class Anticheat extends PluginBase {
 	public array $perm = [];
 	public ?Config $bypassConfig = null;
 	public ?PermissionAttachment $attachment = null;
+	public Webhook $webhook;
 
 	public function onLoad() : void {
 		self::setInstance($this);
 		$this->saveResource("config.yml");
 		$this->saveResource("bypass.yml");
+		$this->saveResource("webhook.yml");
+		$this->webhook = new Webhook();
 	}
 
 	public function onEnable() : void {
@@ -56,9 +59,9 @@ class Anticheat extends PluginBase {
 		Zuri::load();
 		$this->register($this->getConfig()->get("bypass-Permission", "zuri.bypass"), Anticheat::OPERATOR);
 		$this->getServer()->getCommandMap()->register($this->getDescription()->getName(), new ZuriCommand());
-		
+
 		// duplicates: AntiVPN plugin by ReinfyTeam
-		if(($plugin = $this->getServer()->getPluginManager()->getPlugin("AntiVPN")) !== null){
+		if (($plugin = $this->getServer()->getPluginManager()->getPlugin("AntiVPN")) !== null) {
 			$this->getServer()->getPluginManager()->disablePlugin($plugin);
 			$this->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $plugin->getDescription()->getFullName() . " has been disabled to prevent duplicate proxy api request.");
 		}

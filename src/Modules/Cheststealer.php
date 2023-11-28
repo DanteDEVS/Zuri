@@ -27,9 +27,9 @@ namespace Zuri\Modules;
 use pocketmine\event\inventory\InventoryCloseEvent;
 use pocketmine\event\inventory\InventoryOpenEvent;
 use pocketmine\event\inventory\InventoryTransactionEvent;
-use pocketmine\inventory\PlayerInventory;
-use pocketmine\inventory\PlayerCraftingInventory;
 use pocketmine\event\Listener;
+use pocketmine\inventory\PlayerCraftingInventory;
+use pocketmine\inventory\PlayerInventory;
 use Zuri\Zuri;
 use function microtime;
 
@@ -46,11 +46,11 @@ class Cheststealer extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		if(!isset($this->count[$player->getUniqueId()->getBytes()])){
+		if (!isset($this->count[$player->getUniqueId()->getBytes()])) {
 			$this->count[$player->getUniqueId()->getBytes()] = null;
 		}
-		
-		if(!isset($this->time[$player->getUniqueId()->getBytes()])){
+
+		if (!isset($this->time[$player->getUniqueId()->getBytes()])) {
 			$this->time[$player->getUniqueId()->getBytes()] = null;
 		}
 		$countTransaction = $this->count[$player->getUniqueId()->getBytes()];
@@ -65,23 +65,23 @@ class Cheststealer extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		
-		if(!isset($this->count[$player->getUniqueId()->getBytes()])){
+
+		if (!isset($this->count[$player->getUniqueId()->getBytes()])) {
 			$this->count[$player->getUniqueId()->getBytes()] = null;
 		}
-		
-		if(!isset($this->time[$player->getUniqueId()->getBytes()])){
+
+		if (!isset($this->time[$player->getUniqueId()->getBytes()])) {
 			$this->time[$player->getUniqueId()->getBytes()] = null;
 		}
-		
+
 		$countTransaction = $this->count[$player->getUniqueId()->getBytes()];
 		$timeOpenChest = $this->time[$player->getUniqueId()->getBytes()];
 		if ($timeOpenChest !== null && $countTransaction !== null) {
 			$timeDiff = microtime(true) - $timeOpenChest;
-			if ($timeDiff < $countTransaction / 3) {
-				$this->fail($player, 10);
+			if ($timeDiff < $countTransaction / 5) {
+				$this->fail($player, 2);
 			} else {
-				$this->reward($player, 5);
+				$this->reward($player, 1);
 			}
 			unset($this->count[$player->getUniqueId()->getBytes()]);
 			unset($this->time[$player->getUniqueId()->getBytes()]);
@@ -95,17 +95,17 @@ class Cheststealer extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		if(!isset($this->count[$player->getUniqueId()->getBytes()])){
+		if (!isset($this->count[$player->getUniqueId()->getBytes()])) {
 			$this->count[$player->getUniqueId()->getBytes()] = null;
 		}
-		
-		if(!isset($this->time[$player->getUniqueId()->getBytes()])){
+
+		if (!isset($this->time[$player->getUniqueId()->getBytes()])) {
 			$this->time[$player->getUniqueId()->getBytes()] = null;
 		}
-		
+
 		$countTransaction = $this->count[$player->getUniqueId()->getBytes()];
 		$timeOpenChest = $this->time[$player->getUniqueId()->getBytes()];
-		
+
 		foreach ($transaction->getInventories() as $inventory) {
 			if ($inventory instanceof PlayerInventory) {
 				if ($countTransaction !== null && $timeOpenChest !== null) {
