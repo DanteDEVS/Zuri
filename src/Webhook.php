@@ -155,6 +155,8 @@ class Webhook {
 				}
 			}
 		}
+		
+		$this->getWebhook()->send($message);
 	}
 
 	public function format(string $text, array $replacements) : string {
