@@ -29,6 +29,7 @@ use pocketmine\utils\Config;
 use Zuri\Libraries\DiscordWebhookAPI\AllowedMentions;
 use Zuri\Libraries\DiscordWebhookAPI\Embed;
 use Zuri\Libraries\DiscordWebhookAPI\Message;
+use pocketmine\utils\TextFormat as TF;
 use Zuri\Libraries\DiscordWebhookAPI\Webhook as DiscordWebhookAPI;
 use function array_keys;
 use function array_values;
@@ -44,7 +45,13 @@ class Webhook {
 
 	public function getWebhook() : DiscordWebhookAPI {
 		if ($this->webhook === null) {
-			$this->webhook = new Webhook($this->getConfig()->get("webhook-url"));
+			$this->webhook = new DiscordWebhookAPI($this->getConfig()->getNested("webhook-info.url"));
+			Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::YELLOW . "Discord Webhook initilized.");
+		}
+		
+		if(!$this->webhook->isValid()){
+			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Invalid url specified, please refer to the wiki on github.");
+			Anticheat::getInstance()->getServer()->getPluginManager()->disablePlugin(Anticheat::getInstance());
 		}
 
 		return $this->webhook;
@@ -59,7 +66,7 @@ class Webhook {
 	}
 
 
-	public function sendEmbed(Player $player, string $module, int $type = Webhook::PLAYER_WARNING) : void {
+	public function sendEmbed(Player|string $player, string $module, int $type = Webhook::PLAYER_WARNING) : void {
 		$message = new Message();
 		$embed = new Embed();
 		$mentions = new AllowedMentions();
@@ -116,6 +123,8 @@ class Webhook {
 				if ($this->getConfig()->getNested("warn.embed.thumbnail.enabled") === true) {
 					$embed->setImage($this->getConfig()->getNested("warn.embed.thumbnail.value"));
 				}
+				
+				$message->addEmbed($embed);
 			}
 		} else {
 			if ($this->getConfig()->getNested("kick.message.enabled") === true) {
@@ -153,10 +162,13 @@ class Webhook {
 				if ($this->getConfig()->getNested("kick.embed.thumbnail.enabled") === true) {
 					$embed->setImage($this->getConfig()->getNested("kick.embed.thumbnail.value"));
 				}
+				
+				$message->addEmbed($embed);
 			}
 		}
 		
 		$this->getWebhook()->send($message);
+		Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Successfully sent a post message to discord.");
 	}
 
 	public function format(string $text, array $replacements) : string {

@@ -63,7 +63,7 @@ abstract class Zuri {
 	public const BADPACKET_HACK = "Bad packet recieved.";
 	public const NOPACKET_HACK = "No packet recieved.";
 	public const AUTOCLICKER_HACK = "Too high packet recieved.";
-	public const NOCLIP_HACK = "Invalid block actor packet.";
+	public const NOCLIP_HACK = "Invalid player block position packet.";
 	public const VELOCITY_HACK = "Velocity knockback detected.";
 	public const TIMER_HACK = "Bad player ticks recieved.";
 	public const REACH_HACK = "Invalid entity distance hit recieved.";
@@ -375,8 +375,7 @@ abstract class Zuri {
 			new Speed(),
 			new Proxy(),
 			new HighJump(),
-			//new Xray(),
-			new Scaffold(),
+			//new Scaffold(),
 			new Antibot(),
 			new Cheststealer(),
 		] as $module) {

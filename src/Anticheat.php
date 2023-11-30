@@ -31,6 +31,7 @@ use pocketmine\permission\PermissionManager;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\NotCloneable;
 use pocketmine\utils\NotSerializable;
 use pocketmine\utils\SingletonTrait;
@@ -51,7 +52,10 @@ class Anticheat extends PluginBase {
 		$this->saveResource("config.yml");
 		$this->saveResource("bypass.yml");
 		$this->saveResource("webhook.yml");
-		$this->webhook = new Webhook();
+		if($this->getConfig()->get("discord-webhook") === true){
+			$this->webhook = new Webhook();
+			$this->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Discord Webhook is now starting...");
+		}
 	}
 
 	public function onEnable() : void {
@@ -65,6 +69,8 @@ class Anticheat extends PluginBase {
 			$this->getServer()->getPluginManager()->disablePlugin($plugin);
 			$this->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $plugin->getDescription()->getFullName() . " has been disabled to prevent duplicate proxy api request.");
 		}
+		$this->webhook->sendEmbed("Test", "Test Module", Webhook::PLAYER_WARNING);
+		$this->webhook->sendEmbed("Test", "Test Module", Webhook::PLAYER_KICK);
 	}
 
 	public const USER = 0;
