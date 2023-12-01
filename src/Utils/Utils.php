@@ -72,6 +72,6 @@ class Utils {
 		// why this??
 		$hex = str_replace("#", "", $hex);
 
-		return intval(00 . "x" . strtoupper($hex));
+		return hexdec($hex);
 	}
 }
