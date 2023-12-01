@@ -79,13 +79,14 @@ class Cheststealer extends Zuri implements Listener {
 		if ($timeOpenChest !== null && $countTransaction !== null) {
 			$timeDiff = microtime(true) - $timeOpenChest;
 			if ($timeDiff < $countTransaction / 5) {
-				$this->fail($player, 2);
+				$this->fail($player, 5);
 			} else {
 				$this->reward($player, 1);
 			}
 			unset($this->count[$player->getUniqueId()->getBytes()]);
 			unset($this->time[$player->getUniqueId()->getBytes()]);
-			$player->sendMessage("count: " . $countTransaction . ", time: " . $timeOpenChest . ", timeDiff: " . $timeDiff);
+			//debug purpose:
+			//$player->sendMessage("count: " . $countTransaction . ", time: " . $timeOpenChest . ", timeDiff: " . $timeDiff);
 		}
 	}
 
@@ -115,6 +116,7 @@ class Cheststealer extends Zuri implements Listener {
 				}
 			}
 		}
-		$player->sendMessage("count: " . $countTransaction . " time: " . $timeOpenChest);
+		//debug purpose:
+		//$player->sendMessage("count: " . $countTransaction . " time: " . $timeOpenChest);
 	}
 }
