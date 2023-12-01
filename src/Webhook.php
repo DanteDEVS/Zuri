@@ -136,7 +136,7 @@ class Webhook {
 
 				if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
 					if ($this->getConfig()->getNested("kick.embed.color.enabled") === true) {
-						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
+						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("kick.embed.color.value")));
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
