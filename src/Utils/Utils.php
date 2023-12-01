@@ -27,8 +27,8 @@ namespace Zuri\Utils;
 use pocketmine\utils\TextFormat as TF;
 use function array_keys;
 use function array_values;
+use function hexdec;
 use function str_replace;
-use function strtoupper;
 
 class Utils {
 	public static function colorFormat(string $text) : string {

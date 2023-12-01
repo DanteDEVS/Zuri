@@ -125,11 +125,14 @@ abstract class Zuri {
 			unset($this->failed[$player->getUniqueId()->__toString()][$this->flag]);
 			$this->failed[$player->getUniqueId()->__toString()][$this->flag] = 0;
 			$this->notifyAdmins($player, true);
+			Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_KICK, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is kicked for suspected using " . $this->typeIdToString($this->flag) . "!");
+
 			$this->kick($player, $this->typetoReasonString($this->flag));
 		} else {
 			$this->notifyAdmins($player, false);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is suspected using " . $this->typeIdToString($this->flag) . "!");
+			Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
 			$this->failed[$player->getUniqueId()->__toString()][$this->flag] += $howmany;
 			if (!isset($this->lastFail[$player->getUniqueId()->__toString()][$this->flag])) {
 				$this->lastFail[$player->getUniqueId()->__toString()][$this->flag] = microtime(true);
@@ -165,22 +168,6 @@ abstract class Zuri {
 						$staff->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is suspected using " . $this->typeIdToString($this->flag) . "!");
 					}
 				}
-
-				if (Anticheat::getInstance()->getConfig()->get("discord-webhook") === true) {
-					if ($punish) {
-						if (is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)) {
-							Anticheat::getInstance()->webhook->sendEmbed($p->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING);
-						} else {
-							Anticheat::getInstance()->webhook->sendEmbed($player->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING);
-						}
-					} else {
-						if (is_string($player) && ($p = Anticheat::getInstance()->getServer()->getPlayerExact($player) !== null)) {
-							Anticheat::getInstance()->webhook->sendEmbed($p->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_KICK);
-						} else {
-							Anticheat::getInstance()->webhook->sendEmbed($player->getName(), $this->typeIdToString($this->flag), Webhook::PLAYER_KICK);
-						}
-					}
-				};
 			}
 		}
 	}

@@ -35,6 +35,7 @@ use Zuri\Utils\Utils;
 use function array_keys;
 use function array_values;
 use function implode;
+use function is_string;
 use function str_replace;
 
 class Webhook {
@@ -67,7 +68,7 @@ class Webhook {
 	}
 
 
-	public function sendEmbed(Player|string $player, string $module, int $type = Webhook::PLAYER_WARNING) : void {
+	public function send(Player|string $player, string $module, int $type = Webhook::PLAYER_WARNING, int|float $count = 0) : void {
 		$message = new Message();
 		$embed = new Embed();
 		$mentions = new AllowedMentions();
@@ -76,7 +77,7 @@ class Webhook {
 		$message->setAvatarUrl($this->getConfig()->getNested("webhook-info.avatar_url"));
 		$mentions->mentionEveryone($this->getConfig()->getNested("webhook-info.alwaysMentionEveryone"));
 
-		if(is_string($player) && !$player instanceof Player){
+		if (is_string($player) && !$player instanceof Player) {
 			if ($this->getConfig()->getNested("webhook-info.mention_users.enabled")) {
 				foreach ($this->getConfig()->getNested("webhook-info.mention_users.value") as $userId) {
 					$mentions->addUser($userId);
@@ -91,7 +92,7 @@ class Webhook {
 
 			if ($type === Webhook::PLAYER_WARNING) {
 				if ($this->getConfig()->getNested("warn.message.enabled") === true) {
-					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player, "{module_name}" => $module]));
+					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 				}
 
 				if ($this->getConfig()->getNested("warn.embed.enabled") === true) {
@@ -100,20 +101,20 @@ class Webhook {
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.title.enabled") === true) {
-						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module]));
+						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.footer.enabled") === true) {
 						if ($this->getConfig()->getNested("warn.embed.footer.icon_url.enabled") === true) {
-							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
 						} else {
-							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), null);
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]), null);
 						}
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.description.enabled") === true) {
 						$text = implode("\n", $this->getConfig()->getNested("warn.embed.description.value"));
-						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module]));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.image.enabled") === true) {
@@ -130,7 +131,7 @@ class Webhook {
 				}
 			} else {
 				if ($this->getConfig()->getNested("kick.message.enabled") === true) {
-					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player, "{module_name}" => $module]));
+					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 				}
 
 				if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
@@ -139,20 +140,20 @@ class Webhook {
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
-						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module]));
+						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.footer.enabled") === true) {
 						if ($this->getConfig()->getNested("kick.embed.footer.icon_url.enabled") === true) {
-							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
 						} else {
-							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), null);
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]), null);
 						}
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.description.enabled") === true) {
 						$text = implode("\n", $this->getConfig()->getNested("kick.embed.description.value"));
-						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module]));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.image.enabled") === true) {
@@ -169,9 +170,9 @@ class Webhook {
 				}
 			}
 		} else {
-				if ($type === Webhook::PLAYER_WARNING) {
+			if ($type === Webhook::PLAYER_WARNING) {
 				if ($this->getConfig()->getNested("warn.message.enabled") === true) {
-					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 				}
 
 				if ($this->getConfig()->getNested("warn.embed.enabled") === true) {
@@ -180,20 +181,20 @@ class Webhook {
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.title.enabled") === true) {
-						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.footer.enabled") === true) {
 						if ($this->getConfig()->getNested("warn.embed.footer.icon_url.enabled") === true) {
-							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
 						} else {
-							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]), null);
 						}
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.description.enabled") === true) {
 						$text = implode("\n", $this->getConfig()->getNested("warn.embed.description.value"));
-						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("warn.embed.image.enabled") === true) {
@@ -210,7 +211,7 @@ class Webhook {
 				}
 			} else {
 				if ($this->getConfig()->getNested("kick.message.enabled") === true) {
-					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 				}
 
 				if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
@@ -219,20 +220,20 @@ class Webhook {
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
-						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.footer.enabled") === true) {
 						if ($this->getConfig()->getNested("kick.embed.footer.icon_url.enabled") === true) {
-							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
 						} else {
-							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]), null);
 						}
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.description.enabled") === true) {
 						$text = implode("\n", $this->getConfig()->getNested("kick.embed.description.value"));
-						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module, "{count}" => $count]));
 					}
 
 					if ($this->getConfig()->getNested("kick.embed.image.enabled") === true) {
@@ -249,7 +250,7 @@ class Webhook {
 				}
 			}
 		}
-		
+
 		$this->getWebhook()->send($message);
 		Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Successfully sent a post message to discord.");
 	}

@@ -35,6 +35,7 @@ use pocketmine\utils\NotCloneable;
 use pocketmine\utils\NotSerializable;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat as TF;
+use Zuri\Libraries\libasynCurl\Curl;
 
 class Anticheat extends PluginBase {
 	use NotSerializable;
@@ -58,6 +59,7 @@ class Anticheat extends PluginBase {
 	}
 
 	public function onEnable() : void {
+		Curl::register($this);
 		Zuri::load();
 		$this->register($this->getConfig()->get("bypass-Permission", "zuri.bypass"), Anticheat::OPERATOR);
 		$this->getServer()->getCommandMap()->register($this->getDescription()->getName(), new ZuriCommand());

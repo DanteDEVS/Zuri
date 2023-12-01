@@ -43,6 +43,7 @@ warn:
             value:
                 - "```"
                 - "{player_name} is suspected using {module_name}!"
+                - "Warning Count: {count}"
                 - "```"
         footer:
             enabled: true
