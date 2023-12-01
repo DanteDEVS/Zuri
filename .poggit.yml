@@ -5,4 +5,5 @@ branches:
 projects:
   Zuri:
     path: ""
+    icon: "Zuri.png"
 ...
