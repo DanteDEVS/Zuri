@@ -31,6 +31,7 @@ use Zuri\Libraries\DiscordWebhookAPI\AllowedMentions;
 use Zuri\Libraries\DiscordWebhookAPI\Embed;
 use Zuri\Libraries\DiscordWebhookAPI\Message;
 use Zuri\Libraries\DiscordWebhookAPI\Webhook as DiscordWebhookAPI;
+use Zuri\Utils\Utils;
 use function array_keys;
 use function array_values;
 use function implode;
@@ -75,104 +76,186 @@ class Webhook {
 		$message->setAvatarUrl($this->getConfig()->getNested("webhook-info.avatar_url"));
 		$mentions->mentionEveryone($this->getConfig()->getNested("webhook-info.alwaysMentionEveryone"));
 
-		if ($this->getConfig()->getNested("webhook-info.mention_users.enabled")) {
-			foreach ($this->getConfig()->getNested("webhook-info.mention_users.value") as $userId) {
-				$mentions->addUser($userId);
-			}
-		}
-
-		if ($this->getConfig()->getNested("webhook-info.mention_roles.enabled")) {
-			foreach ($this->getConfig()->getNested("webhook-info.mention_roles.value") as $roleId) {
-				$mentions->addRole($roleId);
-			}
-		}
-
-		if ($type === Webhook::PLAYER_WARNING) {
-			if ($this->getConfig()->getNested("warn.message.enabled") === true) {
-				$message->setContent($this->format($this->getConfig()->getNested("warn.message.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+		if(is_string($player) && !$player instanceof Player){
+			if ($this->getConfig()->getNested("webhook-info.mention_users.enabled")) {
+				foreach ($this->getConfig()->getNested("webhook-info.mention_users.value") as $userId) {
+					$mentions->addUser($userId);
+				}
 			}
 
-			if ($this->getConfig()->getNested("warn.embed.enabled") === true) {
-				if ($this->getConfig()->getNested("warn.embed.color.enabled") === true) {
-					$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
+			if ($this->getConfig()->getNested("webhook-info.mention_roles.enabled")) {
+				foreach ($this->getConfig()->getNested("webhook-info.mention_roles.value") as $roleId) {
+					$mentions->addRole($roleId);
+				}
+			}
+
+			if ($type === Webhook::PLAYER_WARNING) {
+				if ($this->getConfig()->getNested("warn.message.enabled") === true) {
+					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player, "{module_name}" => $module]));
 				}
 
-				if ($this->getConfig()->getNested("warn.embed.title.enabled") === true) {
-					$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
-				}
-
-				if ($this->getConfig()->getNested("warn.embed.footer.enabled") === true) {
-					if ($this->getConfig()->getNested("warn.embed.footer.icon_url.enabled") === true) {
-						$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
-					} else {
-						$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+				if ($this->getConfig()->getNested("warn.embed.enabled") === true) {
+					if ($this->getConfig()->getNested("warn.embed.color.enabled") === true) {
+						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
 					}
-				}
 
-				if ($this->getConfig()->getNested("warn.embed.description.enabled") === true) {
-					$text = implode("\n", $this->getConfig()->getNested("warn.embed.description.value"));
-					$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
-				}
-
-				if ($this->getConfig()->getNested("warn.embed.image.enabled") === true) {
-					foreach ($this->getConfig()->getNested("warn.embed.image.value") as $image) {
-						$embed->setImage($image);
+					if ($this->getConfig()->getNested("warn.embed.title.enabled") === true) {
+						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module]));
 					}
+
+					if ($this->getConfig()->getNested("warn.embed.footer.enabled") === true) {
+						if ($this->getConfig()->getNested("warn.embed.footer.icon_url.enabled") === true) {
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
+						} else {
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), null);
+						}
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.description.enabled") === true) {
+						$text = implode("\n", $this->getConfig()->getNested("warn.embed.description.value"));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.image.enabled") === true) {
+						foreach ($this->getConfig()->getNested("warn.embed.image.value") as $image) {
+							$embed->setImage($image);
+						}
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.thumbnail.enabled") === true) {
+						$embed->setImage($this->getConfig()->getNested("warn.embed.thumbnail.value"));
+					}
+
+					$message->addEmbed($embed);
+				}
+			} else {
+				if ($this->getConfig()->getNested("kick.message.enabled") === true) {
+					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player, "{module_name}" => $module]));
 				}
 
-				if ($this->getConfig()->getNested("warn.embed.thumbnail.enabled") === true) {
-					$embed->setImage($this->getConfig()->getNested("warn.embed.thumbnail.value"));
-				}
+				if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
+					if ($this->getConfig()->getNested("kick.embed.color.enabled") === true) {
+						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
+					}
 
-				$message->addEmbed($embed);
+					if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
+						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player, "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.footer.enabled") === true) {
+						if ($this->getConfig()->getNested("kick.embed.footer.icon_url.enabled") === true) {
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
+						} else {
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player, "{module_name}" => $module]), null);
+						}
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.description.enabled") === true) {
+						$text = implode("\n", $this->getConfig()->getNested("kick.embed.description.value"));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player, "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.image.enabled") === true) {
+						foreach ($this->getConfig()->getNested("kick.embed.image.value") as $image) {
+							$embed->setImage($image);
+						}
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.thumbnail.enabled") === true) {
+						$embed->setImage($this->getConfig()->getNested("kick.embed.thumbnail.value"));
+					}
+
+					$message->addEmbed($embed);
+				}
 			}
 		} else {
-			if ($this->getConfig()->getNested("kick.message.enabled") === true) {
-				$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
-			}
-
-			if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
-				if ($this->getConfig()->getNested("kick.embed.color.enabled") === true) {
-					$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
+				if ($type === Webhook::PLAYER_WARNING) {
+				if ($this->getConfig()->getNested("warn.message.enabled") === true) {
+					$message->setContent($this->format($this->getConfig()->getNested("warn.message.value", " "), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
 				}
 
-				if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
-					$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
-				}
-
-				if ($this->getConfig()->getNested("kick.embed.footer.enabled") === true) {
-					if ($this->getConfig()->getNested("kick.embed.footer.icon_url.enabled") === true) {
-						$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
-					} else {
-						$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+				if ($this->getConfig()->getNested("warn.embed.enabled") === true) {
+					if ($this->getConfig()->getNested("warn.embed.color.enabled") === true) {
+						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
 					}
-				}
 
-				if ($this->getConfig()->getNested("kick.embed.description.enabled") === true) {
-					$text = implode("\n", $this->getConfig()->getNested("kick.embed.description.value"));
-					$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
-				}
-
-				if ($this->getConfig()->getNested("kick.embed.image.enabled") === true) {
-					foreach ($this->getConfig()->getNested("kick.embed.image.value") as $image) {
-						$embed->setImage($image);
+					if ($this->getConfig()->getNested("warn.embed.title.enabled") === true) {
+						$embed->setTitle($this->format($this->getConfig()->getNested("warn.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
 					}
+
+					if ($this->getConfig()->getNested("warn.embed.footer.enabled") === true) {
+						if ($this->getConfig()->getNested("warn.embed.footer.icon_url.enabled") === true) {
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("warn.embed.footer.icon_url.vaue"));
+						} else {
+							$embed->setFooter($this->format($this->getConfig()->getNested("warn.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+						}
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.description.enabled") === true) {
+						$text = implode("\n", $this->getConfig()->getNested("warn.embed.description.value"));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.image.enabled") === true) {
+						foreach ($this->getConfig()->getNested("warn.embed.image.value") as $image) {
+							$embed->setImage($image);
+						}
+					}
+
+					if ($this->getConfig()->getNested("warn.embed.thumbnail.enabled") === true) {
+						$embed->setImage($this->getConfig()->getNested("warn.embed.thumbnail.value"));
+					}
+
+					$message->addEmbed($embed);
+				}
+			} else {
+				if ($this->getConfig()->getNested("kick.message.enabled") === true) {
+					$message->setContent($this->format($this->getConfig()->getNested("kick.message.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
 				}
 
-				if ($this->getConfig()->getNested("kick.embed.thumbnail.enabled") === true) {
-					$embed->setImage($this->getConfig()->getNested("kick.embed.thumbnail.value"));
-				}
+				if ($this->getConfig()->getNested("kick.embed.enabled") === true) {
+					if ($this->getConfig()->getNested("kick.embed.color.enabled") === true) {
+						$embed->setColor(Utils::textToHex($this->getConfig()->getNested("warn.embed.color.value")));
+					}
 
-				$message->addEmbed($embed);
+					if ($this->getConfig()->getNested("kick.embed.title.enabled") === true) {
+						$embed->setTitle($this->format($this->getConfig()->getNested("kick.embed.title.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.footer.enabled") === true) {
+						if ($this->getConfig()->getNested("kick.embed.footer.icon_url.enabled") === true) {
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), $this->getConfig()->getNested("kick.embed.footer.icon_url.vaue"));
+						} else {
+							$embed->setFooter($this->format($this->getConfig()->getNested("kick.embed.footer.value"), ["{player_name}" => $player->getName(), "{module_name}" => $module]), null);
+						}
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.description.enabled") === true) {
+						$text = implode("\n", $this->getConfig()->getNested("kick.embed.description.value"));
+						$embed->setDescription($this->format($text, ["{player_name}" => $player->getName(), "{module_name}" => $module]));
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.image.enabled") === true) {
+						foreach ($this->getConfig()->getNested("kick.embed.image.value") as $image) {
+							$embed->setImage($image);
+						}
+					}
+
+					if ($this->getConfig()->getNested("kick.embed.thumbnail.enabled") === true) {
+						$embed->setImage($this->getConfig()->getNested("kick.embed.thumbnail.value"));
+					}
+
+					$message->addEmbed($embed);
+				}
 			}
 		}
-
+		
 		$this->getWebhook()->send($message);
 		Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Successfully sent a post message to discord.");
 	}
 
 	public function format(string $text, array $replacements) : string {
-		$text = str_replace(array_keys($relacements), array_values($replacements), $text);
+		$text = str_replace(array_keys($replacements), array_values($replacements), $text);
 
 		return $text;
 	}

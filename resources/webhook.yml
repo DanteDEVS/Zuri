@@ -19,6 +19,7 @@ webhook-info:
 
 # Webhook Structure: Here's the beginning of the structure on the embed.
 warn:
+    enabled: true
     message:
         enabled: false
         value: "Anticheat Warning!!"
@@ -43,13 +44,14 @@ warn:
                 - "```"
                 - "{player_name} is suspected using {module_name}!"
                 - "```"
-         footer:
+        footer:
             enabled: true
             icon_url:
                 enabled: false
                 value: ""
             value: "Zuri Anticheat made by ReinfyTeam"
-warn:
+kick:
+    enabled: true
     message:
         enabled: false
         value: "Anticheat Warning!!"
@@ -74,7 +76,7 @@ warn:
                 - "```"
                 - "{player_name} is kicked for suspected using {module_name}!"
                 - "```"
-         footer:
+        footer:
             enabled: true
             icon_url:
                 enabled: false

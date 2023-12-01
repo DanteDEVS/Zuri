@@ -68,10 +68,10 @@ class Utils {
 		return $text;
 	}
 
-	public function textToHex(string $hex) {
+	public static function textToHex(string $hex) {
 		// why this??
 		$hex = str_replace("#", "", $hex);
 
-		return 00 . "x" . strtoupper($hex);
+		return intval(00 . "x" . strtoupper($hex));
 	}
 }
