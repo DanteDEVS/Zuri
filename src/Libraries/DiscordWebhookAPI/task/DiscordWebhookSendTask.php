@@ -24,15 +24,15 @@ declare(strict_types = 1);
 
 namespace Zuri\Libraries\DiscordWebhookAPI\task;
 
-use Zuri\Libraries\DiscordWebhookAPI\Message;
-
-use Zuri\Libraries\DiscordWebhookAPI\Webhook;
-use Zuri\Zuri;
-
 use pocketmine\scheduler\AsyncTask;
 
 use pocketmine\Server;
 use pocketmine\thread\NonThreadSafeValue;
+
+use Zuri\Libraries\DiscordWebhookAPI\Message;
+
+use Zuri\Libraries\DiscordWebhookAPI\Webhook;
+use Zuri\Zuri;
 
 use function curl_close;
 use function curl_exec;
@@ -43,7 +43,6 @@ use function in_array;
 use function json_encode;
 
 class DiscordWebhookSendTask extends AsyncTask {
-
 	protected NonThreadSafeValue $webhook;
 
 	protected NonThreadSafeValue $message;
