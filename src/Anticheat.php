@@ -67,8 +67,6 @@ class Anticheat extends PluginBase {
 			$this->getServer()->getPluginManager()->disablePlugin($plugin);
 			$this->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $plugin->getDescription()->getFullName() . " has been disabled to prevent duplicate proxy api request.");
 		}
-		$this->webhook->sendEmbed("Test", "Test Module", Webhook::PLAYER_WARNING);
-		$this->webhook->sendEmbed("Test", "Test Module", Webhook::PLAYER_KICK);
 	}
 
 	public const USER = 0;
