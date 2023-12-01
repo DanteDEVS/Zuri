@@ -24,9 +24,10 @@ declare(strict_types = 1);
 
 namespace Zuri\Libraries\DiscordWebhookAPI\task;
 
-use CortexPE\DiscordWebhookAPI\Message;
+use Zuri\Libraries\DiscordWebhookAPI\Message;
 
-use CortexPE\DiscordWebhookAPI\Webhook;
+use Zuri\Libraries\DiscordWebhookAPI\Webhook;
+use Zuri\Zuri;
 
 use pocketmine\scheduler\AsyncTask;
 
