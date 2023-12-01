@@ -7,8 +7,11 @@ A demo video can be found [here](https://www.youtube.com/watch?v=zsHI5OqV1cs) fo
 
 # TODO:
 * Improve Check
-* Discord Webhook Support
 * Ban/Kick Enchancement Punishment System
+
+# Features:
+* Discord Webhook Support
+* Kick Punishment System
 
 # Checks:
 * Reach (100% done, checked & clean)
