@@ -31,11 +31,10 @@ use pocketmine\permission\PermissionManager;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\NotCloneable;
 use pocketmine\utils\NotSerializable;
 use pocketmine\utils\SingletonTrait;
-use Zuri\Libraries\libasynCurl\Curl;
+use pocketmine\utils\TextFormat as TF;
 
 class Anticheat extends PluginBase {
 	use NotSerializable;
@@ -52,14 +51,13 @@ class Anticheat extends PluginBase {
 		$this->saveResource("config.yml");
 		$this->saveResource("bypass.yml");
 		$this->saveResource("webhook.yml");
-		if($this->getConfig()->get("discord-webhook") === true){
+		if ($this->getConfig()->get("discord-webhook") === true) {
 			$this->webhook = new Webhook();
 			$this->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Discord Webhook is now starting...");
 		}
 	}
 
 	public function onEnable() : void {
-		Curl::register($this);
 		Zuri::load();
 		$this->register($this->getConfig()->get("bypass-Permission", "zuri.bypass"), Anticheat::OPERATOR);
 		$this->getServer()->getCommandMap()->register($this->getDescription()->getName(), new ZuriCommand());

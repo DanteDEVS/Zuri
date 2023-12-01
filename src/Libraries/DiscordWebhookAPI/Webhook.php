@@ -24,9 +24,9 @@ declare(strict_types = 1);
 
 namespace Zuri\Libraries\DiscordWebhookAPI;
 
-use Zuri\Libraries\libasynCurl\Curl;
+use pocketmine\Server;
+use Zuri\Libraries\DiscordWebhookAPI\task\DiscordWebhookSendTask;
 use function filter_var;
-use function json_encode;
 
 class Webhook {
 	/** @var string */
@@ -45,6 +45,6 @@ class Webhook {
 	}
 
 	public function send(Message $message) : void {
-		Curl::postRequest($this->getURL(), json_encode($message), 10, ["Content-Type: application/json"]);
+		Server::getInstance()->getAsyncPool()->submitTask(new DiscordWebhookSendTask($this, $message));
 	}
 }

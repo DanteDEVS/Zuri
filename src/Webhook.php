@@ -26,10 +26,10 @@ namespace Zuri;
 
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
+use pocketmine\utils\TextFormat as TF;
 use Zuri\Libraries\DiscordWebhookAPI\AllowedMentions;
 use Zuri\Libraries\DiscordWebhookAPI\Embed;
 use Zuri\Libraries\DiscordWebhookAPI\Message;
-use pocketmine\utils\TextFormat as TF;
 use Zuri\Libraries\DiscordWebhookAPI\Webhook as DiscordWebhookAPI;
 use function array_keys;
 use function array_values;
@@ -48,8 +48,8 @@ class Webhook {
 			$this->webhook = new DiscordWebhookAPI($this->getConfig()->getNested("webhook-info.url"));
 			Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::YELLOW . "Discord Webhook initilized.");
 		}
-		
-		if(!$this->webhook->isValid()){
+
+		if (!$this->webhook->isValid()) {
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Invalid url specified, please refer to the wiki on github.");
 			Anticheat::getInstance()->getServer()->getPluginManager()->disablePlugin(Anticheat::getInstance());
 		}
@@ -123,7 +123,7 @@ class Webhook {
 				if ($this->getConfig()->getNested("warn.embed.thumbnail.enabled") === true) {
 					$embed->setImage($this->getConfig()->getNested("warn.embed.thumbnail.value"));
 				}
-				
+
 				$message->addEmbed($embed);
 			}
 		} else {
@@ -162,11 +162,11 @@ class Webhook {
 				if ($this->getConfig()->getNested("kick.embed.thumbnail.enabled") === true) {
 					$embed->setImage($this->getConfig()->getNested("kick.embed.thumbnail.value"));
 				}
-				
+
 				$message->addEmbed($embed);
 			}
 		}
-		
+
 		$this->getWebhook()->send($message);
 		Anticheat::getInstance()->getServer()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Successfully sent a post message to discord.");
 	}
