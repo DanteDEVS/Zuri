@@ -27,6 +27,7 @@ namespace Zuri\Libraries\DiscordWebhookAPI\task;
 use pocketmine\scheduler\AsyncTask;
 
 use pocketmine\Server;
+use pocketmine\utils\TextFormat as TF;
 use pocketmine\thread\NonThreadSafeValue;
 
 use Zuri\Libraries\DiscordWebhookAPI\Message;
@@ -70,7 +71,7 @@ class DiscordWebhookSendTask extends AsyncTask {
 	public function onCompletion() : void {
 		$response = $this->getResult();
 		if (!in_array($response[1], [200, 204], true)) {
-			Server::getInstance()->getLogger()->error(Zuri::PREFIX . " " . Zuri::ARROW . " " . "Got error ({$response[1]}): " . $response[0]);
+			Server::getInstance()->getLogger()->debug(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Got error ({$response[1]}): " . $response[0]);
 		}
 	}
 }

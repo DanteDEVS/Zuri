@@ -362,6 +362,7 @@ abstract class Zuri {
 			new Speed(),
 			new Proxy(),
 			new HighJump(),
+			//TODO:
 			//new Scaffold(),
 			new Antibot(),
 			new Cheststealer(),
