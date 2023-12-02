@@ -23,7 +23,7 @@ A demo video can be found [here](https://www.youtube.com/watch?v=zsHI5OqV1cs) fo
 * NoClip (100% done, checked & clean)
 * Proxy/VPN (100% done, checked & clean)
 * Autoclicker (100% done, unchecked)
-* Scaffold (70% done, some false-positive)
+* Scaffold (10% done, some false-positive)
 * Killaura (90% done, unchecked)
 * NoPacket/Blink (100% done, unchecked)
 * Edition Faker (100% done, unchecked)
