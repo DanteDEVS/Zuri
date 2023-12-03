@@ -6,4 +6,7 @@ bypassed-players:
     - "xqwtxon"
 # List of bypassed ip on PROXY/VPN Check.
 bypass-ip: []
+# List of bypassed worlds
+bypassed-worlds:
+     - "lobby"
 ...

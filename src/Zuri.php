@@ -125,14 +125,18 @@ abstract class Zuri {
 			unset($this->failed[$player->getUniqueId()->__toString()][$this->flag]);
 			$this->failed[$player->getUniqueId()->__toString()][$this->flag] = 0;
 			$this->notifyAdmins($player, true);
-			Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_KICK, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
+			if (Anticheat::getInstance()->getConfig()->get("discord-webhook") === true) {
+				Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_KICK, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
+			}
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is kicked for suspected using " . $this->typeIdToString($this->flag) . "!");
 
 			$this->kick($player, $this->typetoReasonString($this->flag));
 		} else {
 			$this->notifyAdmins($player, false);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $player->getName() . " is suspected using " . $this->typeIdToString($this->flag) . "!");
-			Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
+			if (Anticheat::getInstance()->getConfig()->get("discord-webhook") === true) {
+				Anticheat::getInstance()->webhook->send($player, $this->typeIdToString($this->flag), Webhook::PLAYER_WARNING, $this->failed[$player->getUniqueId()->__toString()][$this->flag]);
+			}
 			$this->failed[$player->getUniqueId()->__toString()][$this->flag] += $howmany;
 			if (!isset($this->lastFail[$player->getUniqueId()->__toString()][$this->flag])) {
 				$this->lastFail[$player->getUniqueId()->__toString()][$this->flag] = microtime(true);
@@ -383,6 +387,6 @@ abstract class Zuri {
 	}
 
 	public function canBypass(Player $p) : bool {
-		return (Anticheat::getInstance()->getServer()->isOp($p->getName()) || $p->hasPermission(Anticheat::getInstance()->getConfig()->get("bypass-permission", "zuri.bypass")) || in_array($p->getName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-players"), true) || !Zuri::$enabled);
+		return (Anticheat::getInstance()->getServer()->isOp($p->getName()) || $p->hasPermission(Anticheat::getInstance()->getConfig()->get("bypass-permission", "zuri.bypass")) || in_array($p->getName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-players"), true) || !Zuri::$enabled || in_array($p->getWorld()->getFolderName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-worlds"), true));
 	}
 }
