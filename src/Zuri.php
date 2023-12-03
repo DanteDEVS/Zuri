@@ -30,7 +30,7 @@ use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
 use Zuri\Modules\Antibot;
-use Zuri\Modules\AutoClicker;
+use Zuri\Modules\Autoclicker;
 use Zuri\Modules\BadPackets;
 use Zuri\Modules\Cheststealer;
 use Zuri\Modules\EditionFaker;

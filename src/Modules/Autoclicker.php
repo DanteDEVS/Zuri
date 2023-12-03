@@ -39,7 +39,7 @@ use function microtime;
 use function rand;
 use function round;
 
-class AutoClicker extends Zuri implements Listener {
+class Autoclicker extends Zuri implements Listener {
 	public function __construct() {
 		parent::__construct(Zuri::AUTOCLICKER);
 	}
