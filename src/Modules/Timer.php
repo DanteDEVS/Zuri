@@ -52,7 +52,7 @@ class Timer extends Zuri implements Listener {
 		if (($player = $session->getPlayer()) === null) {
 			return;
 		}
-
+		if($this->isLagging($player)) return;
 		if (!isset($this->time[$player->getUniqueId()->__toString()])) {
 			$this->time[$player->getUniqueId()->__toString()] = 0;
 		}

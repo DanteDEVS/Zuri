@@ -39,6 +39,7 @@ class NoClip extends Zuri implements Listener {
 		if ($this->canBypass($event->getPlayer())) {
 			return;
 		}
+		if($this->isLagging($event->getPlayer())) return;
 		$id = $event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, -1, 0))->getTypeId();
 		if ($event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, 1, 0))->isSolid() && $event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, -1, 0))->isSolid() && $event->getPlayer()->getGamemode() !== GameMode::SPECTATOR()) {
 			switch($id) {

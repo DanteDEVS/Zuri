@@ -60,6 +60,7 @@ class Killaura extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if (!$packet instanceof DataPacket) {
 			return;
 		}
@@ -95,6 +96,7 @@ class Killaura extends Zuri implements Listener {
 			if ($this->canBypass($player)) {
 				return;
 			}
+			if($this->isLagging($player)) return;
 			if ($packet instanceof ServerboundPacket) {
 				if ($packet instanceof PlayerAuthInputPacket) {
 					$expectedHeadYaw = fmod(($packet->getYaw() > 0 ? 0 : 360) + $packet->getYaw(), 360);
@@ -146,8 +148,8 @@ class Killaura extends Zuri implements Listener {
 		}
 	}
 
-	public static function getDeltaDirectionVector(RCPlayerAPI $playerAPI, float $distance) : Vector3 {
-		return $playerAPI->getPlayer()->getDirectionVector()->multiply($distance);
+	public static function getDeltaDirectionVector(Player $player, float $distance) : Vector3 {
+		return $player->getDirectionVector()->multiply($distance);
 	}
 
 	public static function distance(Vector3 $from, Vector3 $to) {

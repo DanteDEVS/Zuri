@@ -59,6 +59,7 @@ class Instabreak extends Zuri implements Listener {
 			if ($this->canBypass($player)) {
 				return;
 			}
+			if($this->isLagging($player)) return;
 
 			if (!isset($this->breakTimes[$uuid = $player->getUniqueId()->getBytes()])) {
 				$this->fail($player);

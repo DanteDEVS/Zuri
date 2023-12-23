@@ -48,6 +48,7 @@ class Scaffold extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player) return;
 		if ($itemHand->getBlock() === VanillaBlocks::AIR()) {
 			$x = $posBlock->getX();
 			$y = $posBlock->getY();
@@ -65,6 +66,7 @@ class Scaffold extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player) return;
 		if (
 			$pitch > 90 &&
 			$event->getBlockAgainst()->getPosition()->getY() < $player->getLocation()->getY() &&
@@ -83,6 +85,7 @@ class Scaffold extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player) return;
 		$distance = Scaffold::distance($posPlayer->asVector3(), $posBlock->asVector3());
 		// check first if the player is on sky
 		//if (!$event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, 2, 0))->isSolid() && !$event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, -2, 0))->isSolid() && $event->getPlayer()->getGamemode() !== GameMode::SPECTATOR()) return;
@@ -100,6 +103,7 @@ class Scaffold extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player) return;
 		if ($player->getInventory()->getItemInHand()->isNull()) {
 			$this->fail($player);
 		}

@@ -389,4 +389,14 @@ abstract class Zuri {
 	public function canBypass(Player $p) : bool {
 		return (Anticheat::getInstance()->getServer()->isOp($p->getName()) || $p->hasPermission(Anticheat::getInstance()->getConfig()->get("bypass-permission", "zuri.bypass")) || in_array($p->getName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-players"), true) || !Zuri::$enabled || in_array($p->getWorld()->getFolderName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-worlds"), true));
 	}
+	
+	public function isLagging(Player $player) : bool{
+		if($player->isConnected() && $player->spawned){
+			if($player->getNetworkSession()->getPing() > 180){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

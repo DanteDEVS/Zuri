@@ -96,6 +96,7 @@ class Cheststealer extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if (!isset($this->count[$player->getUniqueId()->getBytes()])) {
 			$this->count[$player->getUniqueId()->getBytes()] = null;
 		}

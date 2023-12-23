@@ -70,9 +70,10 @@ class Glitch extends Zuri implements Listener {
 		if (!isset($this->pearlland[$entity->getName()])) {
 			return;
 		}
-		if ($this->canBypass($player)) {
+		if ($this->canBypass($entity)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if (Core::getInstance()->getServer()->getTick() != $this->pearlland[$entity->getName()]) {
 			return;
 		} //Check if teleportation was caused by enderpearl (by checking is a projectile landed at the same time as teleportation) TODO Find a less hacky way of doing this?
@@ -196,6 +197,7 @@ class Glitch extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if ($player->isCreative() || $player->isSpectator()) {
 			return;
 		}
@@ -222,6 +224,7 @@ class Glitch extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if ($player->isCreative() || $player->isSpectator()) {
 			return;
 		}
@@ -270,6 +273,7 @@ class Glitch extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		if ($event->isCancelled()) {
 			if ($block instanceof Door || $block instanceof FenceGate || $block instanceof Trapdoor) {
 				$x = $player->getLocation()->getX();

@@ -45,6 +45,7 @@ class HighJump extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
+		if($this->isLagging($player)) return;
 		$f = $this->lastFrom[$player->getUniqueId()->getBytes()];
 		$t = $this->lastTo[$player->getUniqueId()->getBytes()];
 		$d = $f->distance($t);
