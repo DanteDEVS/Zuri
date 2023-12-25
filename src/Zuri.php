@@ -29,6 +29,7 @@ use pocketmine\block\BlockTypeIds;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\event\HandlerListManager;
 use Zuri\Modules\Antibot;
 use Zuri\Modules\Autoclicker;
 use Zuri\Modules\BadPackets;
@@ -366,13 +367,19 @@ abstract class Zuri {
 			new Speed(),
 			new Proxy(),
 			new HighJump(),
-			//TODO:
-			//new Scaffold(),
+			new Scaffold(),
 			new Antibot(),
 			new Cheststealer(),
 		] as $module) {
 			$module->register($module);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Enabled \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
+		}
+	}
+	
+	public static function unload() : void {
+		foreach(Zuri::$enabledModules as $module){
+			HandlerListManager::global()->unregisterAll($module);
+			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Unloaded \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
 		}
 	}
 

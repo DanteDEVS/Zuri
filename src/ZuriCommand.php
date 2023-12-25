@@ -44,11 +44,13 @@ class ZuriCommand extends Command implements PluginOwned {
 		if ((count($args) === 0) && empty($args[0])) {
 			$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Usage: " . $this->usageMessage);
 		} elseif (isset($args[0]) && ($args[0] === "on" || $args[0] === "enable") && Zuri::$enabled === false) {
+			Zuri::load();
 			Zuri::$enabled = true;
 			$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "The anticheat is now enabled.");
 		} elseif (isset($args[0]) && ($args[0] === "on" || $args[0] === "enable") && Zuri::$enabled === true) {
 			$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "The anticheat is already enabled.");
 		} elseif (isset($args[0]) && ($args[0] === "off" || $args[0] === "disable") && Zuri::$enabled === true) {
+			Zuri::unload();
 			Zuri::$enabled = false;
 			$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::DARK_RED . "The anticheat is now disabled.");
 		} elseif (isset($args[0]) && ($args[0] === "modules" || $args[0] === "list")) {

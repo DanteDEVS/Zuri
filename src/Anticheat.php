@@ -43,12 +43,12 @@ class Anticheat extends PluginBase {
 	use NotCloneable;
 	use SingletonTrait;
 
-	public array $perm = [];
-	public ?Config $bypassConfig = null;
-	public ?PermissionAttachment $attachment = null;
-	public Webhook $webhook;
+	protected array $perm = [];
+	protected ?Config $bypassConfig = null;
+	protected ?PermissionAttachment $attachment = null;
+	protected Webhook $webhook;
 
-	public function onLoad() : void {
+	protected function onLoad() : void {
 		self::setInstance($this);
 		$this->saveResource("config.yml");
 		$this->saveResource("bypass.yml");
@@ -59,7 +59,7 @@ class Anticheat extends PluginBase {
 		}
 	}
 
-	public function onEnable() : void {
+	protected function onEnable() : void {
 		Curl::register($this);
 		Zuri::load();
 		$this->register($this->getConfig()->get("bypass-Permission", "zuri.bypass"), Anticheat::OPERATOR);
@@ -72,14 +72,14 @@ class Anticheat extends PluginBase {
 		}
 	}
 
-	public const USER = 0;
-	public const OPERATOR = 1;
-	public const CONSOLE = 3;
-	public const NONE = -1;
+	protected const USER = 0;
+	protected const OPERATOR = 1;
+	protected const CONSOLE = 3;
+	protected const NONE = -1;
 
 	protected function register(string $permission, int $permAccess, array $childPermission = []) : void {
 		$this->perm[] = $permission;
-		$perm = new PMPermission($permission, "PrideMC Network Permission", $childPermission);
+		$perm = new PMPermission($permission, "Zuri Anticheat Player Permission", $childPermission);
 		$permManager = PermissionManager::getInstance();
 		switch($permAccess) {
 			case Anticheat::USER:
@@ -102,7 +102,7 @@ class Anticheat extends PluginBase {
 		$permManager->addPermission($perm);
 	}
 
-	public function addPlayerPermissions(Player $player, array $permissions) : void {
+	protected function addPlayerPermissions(Player $player, array $permissions) : void {
 		if ($this->attachment === null) {
 			$this->attachment = $player->addAttachment(Core::getInstance());
 		}
@@ -110,18 +110,18 @@ class Anticheat extends PluginBase {
 		$player->getNetworkSession()->syncAvailableCommands();
 	}
 
-	public function resetPlayerPermissions() : void {
+	protected function resetPlayerPermissions() : void {
 		if ($this->attachment === null) {
 			return;
 		}
 		$this->attachment->clearPermissions();
 	}
 
-	public function getAllPermissions() : array {
+	protected function getAllPermissions() : array {
 		return $this->perm;
 	}
 
-	public function getBypassConfig() : Config {
+	protected function getBypassConfig() : Config {
 		if ($this->bypassConfig === null) {
 			$this->bypassConfig = new Config($this->getDataFolder() . "bypass.yml", Config::YAML);
 		}
