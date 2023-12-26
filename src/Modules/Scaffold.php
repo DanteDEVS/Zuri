@@ -24,24 +24,24 @@ declare(strict_types=1);
 
 namespace Zuri\Modules;
 
+use pocketmine\block\BlockTypeIds;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockPlaceEvent;
-use pocketmine\block\BlockTypeIds;
 use pocketmine\event\Listener;
 use pocketmine\math\Vector3;
-use pocketmine\player\GameMode;
-use pocketmine\player\Player;
 use pocketmine\network\mcpe\protocol\types\DeviceOS;
+use pocketmine\player\Player;
 use Zuri\Zuri;
-use function abs;
+use function in_array;
 use function pow;
+use function round;
 use function sqrt;
 
 class Scaffold extends Zuri implements Listener {
 	public function __construct() {
 		parent::__construct(Zuri::SCAFFOLD);
 	}
-	
+
 	// HACK CHANGES!! TO BE ON TESTING!!
 	// This is to be intended only in touch scenes, but few things are needs to be tested
 	// since mojang added new controls in 1.19, and it seems to be hard enough to fight this checks
@@ -50,9 +50,9 @@ class Scaffold extends Zuri implements Listener {
 	// This might be fixed in the future, but mostly now it would probably in testing process since false-positive
 	// changes. I would probably suggesting if mojang sends a statistics of settings of a player such as POV, Touch events,
 	// or Mobile Control scenes, that would be could better and simpliest to detect players using Scaffold.
-	
+
 	// Status: 0% (Mobile, IOS Scene)
-	public function MobileScaffold(BlockPlaceEvent $event)  : void {
+	public function MobileScaffold(BlockPlaceEvent $event) : void {
 		$player = $this->getPlayer();
 		$block = $event->getBlockAgainst();
 		$posBlock = $block->getPosition();
@@ -60,15 +60,18 @@ class Scaffold extends Zuri implements Listener {
 		$posPlayer = $player->getLocation();
 		// Always check if player is on Android/IOS.
 		if ($player->getPlayerInfo()->getExtraData()["DeviceOS"] === DeviceOS::ANDROID || $player->getPlayerInfo()->getExtraData()["DeviceOS"] === DeviceOS::IOS) {
-			
 			// Checks that are really important
-			if($this->canBypass($player)) return;
-			
-			if($this->isLagging($player)) return;
-			
+			if ($this->canBypass($player)) {
+				return;
+			}
+
+			if ($this->isLagging($player)) {
+				return;
+			}
+
 			// the checks will only run if its their surrounding are air
 			$surroundingBlocks = $this->GetSurroundingBlocks($player);
-			
+
 			if (
 				in_array(BlockTypeIds::OAK_FENCE, $surroundingBlocks, true)
 				|| in_array(BlockTypeIds::COBBLESTONE_WALL, $surroundingBlocks, true)
@@ -97,10 +100,10 @@ class Scaffold extends Zuri implements Listener {
 				|| in_array(BlockTypeIds::HARDENED_GLASS_PANE, $surroundingBlocks, true)
 				|| in_array(BlockTypeIds::STAINED_GLASS_PANE, $surroundingBlocks, true)
 				|| in_array(BlockTypeIds::STAINED_HARDENED_GLASS_PANE, $surroundingBlocks, true)
-					) {
-						return;
-					}
-			
+			) {
+				return;
+			}
+
 			// IMPOSIBLE: Not bad.
 			if ($itemHand->getBlock() === VanillaBlocks::AIR()) {
 				$x = $posBlock->getX();
@@ -111,13 +114,13 @@ class Scaffold extends Zuri implements Listener {
 					return;
 				}
 			}
-			
+
 			// Nullable Items but placing blocks? Are you okay toolbox?
 			if ($player->getInventory()->getItemInHand()->isNull()) {
 				$this->fail($player);
 				return;
 			}
-			
+
 			// Impossible head pitch placing blocks
 			// bruh mobile players can't even place blocks under 4 blocks while heads are down
 			$distance = Scaffold::distance($posPlayer->asVector3(), $posBlock->asVector3());
@@ -125,17 +128,17 @@ class Scaffold extends Zuri implements Listener {
 				$this->fail($player);
 				return;
 			}
-			
+
 			$this->reward($player, 0.01); // for false-positive changes.
 		}
 	}
-	
-	
+
+
 
 	public static function distance(Vector3 $from, Vector3 $to) {
 		return sqrt(pow($from->getX() - $to->getX(), 2) + pow($from->getY() - $to->getY(), 2) + pow($from->getZ() - $to->getZ(), 2));
 	}
-	
+
 	public function GetSurroundingBlocks(Player $player) : array {
 		$world = $player->getWorld();
 

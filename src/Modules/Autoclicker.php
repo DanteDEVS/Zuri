@@ -51,7 +51,9 @@ class Autoclicker extends Zuri implements Listener {
 			if ($this->canBypass($player)) {
 				return;
 			}
-			if($this->isLagging($player)) return;
+			if ($this->isLagging($player)) {
+				return;
+			}
 			if ($packet instanceof LevelSoundEventPacket) {
 				if ($packet->sound === LevelSoundEvent::ATTACK_NODAMAGE) {
 					$this->addCps($player);

@@ -27,8 +27,8 @@ namespace Zuri\Libraries\DiscordWebhookAPI\task;
 use pocketmine\scheduler\AsyncTask;
 
 use pocketmine\Server;
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\thread\NonThreadSafeValue;
+use pocketmine\utils\TextFormat as TF;
 
 use Zuri\Libraries\DiscordWebhookAPI\Message;
 

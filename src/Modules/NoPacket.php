@@ -55,7 +55,9 @@ class NoPacket extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return false;
 		}
-		if($this->isLagging($player)) return false;
+		if ($this->isLagging($player)) {
+			return false;
+		}
 
 		$this->elapse[$player->getUniqueId()->__toString()] = microtime(true);
 		$last = $this->elapse[$player->getUniqueId()->__toString()];

@@ -43,7 +43,9 @@ class Antibot extends Zuri implements Listener {
 			if ($this->canBypass($player)) {
 				return;
 			}
-			if($this->isLagging($player)) return;
+			if ($this->isLagging($player)) {
+				return;
+			}
 		}
 		if ($extraData["DeviceOS"] === DeviceOS::ANDROID) {
 			$model = explode(" ", $extraData["DeviceModel"], 2)[0];

@@ -52,7 +52,9 @@ class BadPackets extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		if($this->isLagging($player)) return;
+		if ($this->isLagging($player)) {
+			return;
+		}
 		if ($packet instanceof TextPacket) {
 			if (mb_strlen($packet->message) > BadPackets::MESSAGE_LIMIT) {
 				if ($player->getRankId() === Rank::OWNER) {
@@ -73,7 +75,9 @@ class BadPackets extends Zuri implements Listener {
 		if (!($player instanceof Player)) {
 			return;
 		}
-		if($this->isLagging($player)) return;
+		if ($this->isLagging($player)) {
+			return;
+		}
 
 		if ($packet instanceof PlayerAuthInputPacket && abs($packet->getPitch()) > 92) {
 			$this->fail($player);

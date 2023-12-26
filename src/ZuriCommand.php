@@ -54,7 +54,7 @@ class ZuriCommand extends Command implements PluginOwned {
 			Zuri::$enabled = false;
 			$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::DARK_RED . "The anticheat is now disabled.");
 		} elseif (isset($args[0]) && ($args[0] === "modules" || $args[0] === "list")) {
-			if(Zuri::$enabled){
+			if (Zuri::$enabled) {
 				$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::AQUA . "These are enabled modules in the anticheat:");
 				foreach (Zuri::$enabledModules as $module) {
 					$sender->sendMessage(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "- " . $module->typeIdToString($module->getFlagId()));

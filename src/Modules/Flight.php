@@ -48,7 +48,9 @@ class Flight extends Zuri implements Listener {
 		if ($player === null) {
 			return;
 		}
-		if($this->isLagging($player)) return;
+		if ($this->isLagging($player)) {
+			return;
+		}
 		if ($this->canBypass($player)) {
 			return;
 		}
@@ -84,7 +86,9 @@ class Flight extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		if($this->isLagging($player)) return;
+		if ($this->isLagging($player)) {
+			return;
+		}
 		if (!$player->isCreative() && !$player->isSpectator() && !$player->getAllowFlight()) {
 			if ($oldPos->getY() <= $newPos->getY()) {
 				if ($player->getInAirTicks() > 40) {

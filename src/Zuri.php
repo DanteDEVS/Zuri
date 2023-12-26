@@ -26,10 +26,10 @@ namespace Zuri;
 
 use pocketmine\block\BlockTypeIds;
 
+use pocketmine\event\HandlerListManager;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat as TF;
-use pocketmine\event\HandlerListManager;
 use Zuri\Modules\Antibot;
 use Zuri\Modules\Autoclicker;
 use Zuri\Modules\BadPackets;
@@ -375,9 +375,9 @@ abstract class Zuri {
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Enabled \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
 		}
 	}
-	
+
 	public static function unload() : void {
-		foreach(Zuri::$enabledModules as $module){
+		foreach (Zuri::$enabledModules as $module) {
 			HandlerListManager::global()->unregisterAll($module);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Unloaded \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
 		}
@@ -397,14 +397,14 @@ abstract class Zuri {
 	public function canBypass(Player $p) : bool {
 		return (Anticheat::getInstance()->getServer()->isOp($p->getName()) || $p->hasPermission(Anticheat::getInstance()->getConfig()->get("bypass-permission", "zuri.bypass")) || in_array($p->getName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-players"), true) || !Zuri::$enabled || in_array($p->getWorld()->getFolderName(), Anticheat::getInstance()->getBypassConfig()->get("bypassed-worlds"), true));
 	}
-	
-	public function isLagging(Player $player) : bool{
-		if($player->isConnected() && $player->spawned){
-			if($player->getNetworkSession()->getPing() > 180){
+
+	public function isLagging(Player $player) : bool {
+		if ($player->isConnected() && $player->spawned) {
+			if ($player->getNetworkSession()->getPing() > 180) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

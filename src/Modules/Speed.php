@@ -48,8 +48,10 @@ class Speed extends Zuri implements Listener {
 		if ($this->canBypass($player)) {
 			return;
 		}
-		
-		if($this->isLagging($player)) return;
+
+		if ($this->isLagging($player)) {
+			return;
+		}
 		if (($event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, 2, 0))->isSolid() && $event->getPlayer()->getWorld()->getBlock($event->getPlayer()->getLocation()->add(0, -1, 0))->isSolid()) && $event->getPlayer()->getGamemode() !== GameMode::SPECTATOR()) {
 			return;
 		}
