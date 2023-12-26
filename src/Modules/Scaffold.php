@@ -122,14 +122,14 @@ class Scaffold extends Zuri implements Listener {
 			}
 
 			// Impossible head pitch placing blocks
-			// bruh mobile players can't even place blocks under 4 blocks while heads are down
+			// bruh mobile players can't even place blocks under 4 blocks while heads are up
 			$distance = Scaffold::distance($posPlayer->asVector3(), $posBlock->asVector3());
 			if ($distance < 4 && round($posPlayer->getPitch()) > 10) {
 				$this->fail($player);
 				return;
 			}
 
-			$this->reward($player, 0.01); // for false-positive changes.
+			$this->reward($player, 0.01); // for false-positive checks.
 		}
 	}
 

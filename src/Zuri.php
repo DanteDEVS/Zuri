@@ -367,7 +367,7 @@ abstract class Zuri {
 			new Speed(),
 			new Proxy(),
 			new HighJump(),
-			new Scaffold(),
+			//new Scaffold(), WIP
 			new Antibot(),
 			new Cheststealer(),
 		] as $module) {
