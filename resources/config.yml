@@ -39,6 +39,12 @@ reach:
   # Max reach block/entity interact distance.
    max-reach-distance-entity-interaction: 8
 
+# VELOCITY
+# Expected velocity of the player based in their status.
+velocity: 0.6
+
+
+
 # Discord Webhook
 # Do you want to send reports on discord? It can be configure on webhook.yml.
 discord-webhook: true

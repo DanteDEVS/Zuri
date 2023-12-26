@@ -45,7 +45,7 @@ class Anticheat extends PluginBase {
 	protected array $perm = [];
 	protected ?Config $bypassConfig = null;
 	protected ?PermissionAttachment $attachment = null;
-	protected Webhook $webhook;
+	public Webhook $webhook;
 
 	protected function onLoad() : void {
 		self::setInstance($this);

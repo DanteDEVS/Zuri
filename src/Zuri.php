@@ -47,6 +47,7 @@ use Zuri\Modules\Reach;
 use Zuri\Modules\Scaffold;
 use Zuri\Modules\Speed;
 use Zuri\Modules\Timer;
+use Zuri\Modules\Velocity;
 
 use function base64_encode;
 use function in_array;
@@ -185,6 +186,9 @@ abstract class Zuri {
 		switch($flag) {
 			case Zuri::REACH:
 				return "Reach";
+				break;
+			case Zuri::VELOCITY:
+				return "Velocity";
 				break;
 			case Zuri::SPEED:
 				return "Speed";
@@ -370,6 +374,7 @@ abstract class Zuri {
 			//new Scaffold(), WIP
 			new Antibot(),
 			new Cheststealer(),
+			new Velocity(),
 		] as $module) {
 			$module->register($module);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::GREEN . "Enabled \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
