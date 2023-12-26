@@ -1,7 +1,7 @@
 ---
 name: Zuri
 description: Zuri is an anticheat made to protect the server from any may unfair advantages from the players.
-author: ReinfyTeam
+authors: [ReinfyTeam, xqwtxon, xwertxy]
 version: 1.0.4
 website: "https://github.com/ReinfyTeam/Zuri/"
 main: Zuri\Anticheat
