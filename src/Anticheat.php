@@ -102,7 +102,7 @@ class Anticheat extends PluginBase {
 		$permManager->addPermission($perm);
 	}
 
-	protected function addPlayerPermissions(Player $player, array $permissions) : void {
+	public function addPlayerPermissions(Player $player, array $permissions) : void {
 		if ($this->attachment === null) {
 			$this->attachment = $player->addAttachment(Core::getInstance());
 		}
@@ -117,11 +117,11 @@ class Anticheat extends PluginBase {
 		$this->attachment->clearPermissions();
 	}
 
-	protected function getAllPermissions() : array {
+	public function getAllPermissions() : array {
 		return $this->perm;
 	}
 
-	protected function getBypassConfig() : Config {
+	public function getBypassConfig() : Config {
 		if ($this->bypassConfig === null) {
 			$this->bypassConfig = new Config($this->getDataFolder() . "bypass.yml", Config::YAML);
 		}

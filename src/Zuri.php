@@ -381,6 +381,7 @@ abstract class Zuri {
 			HandlerListManager::global()->unregisterAll($module);
 			Anticheat::getInstance()->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . "Unloaded \"" . $module->typeIdToString($module->getFlagId()) . "\" module!");
 		}
+		Zuri::$enabledModules = [];
 	}
 
 	public static function XZDistanceSquared(Vector3 $v1, Vector3 $v2) : float {
