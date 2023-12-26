@@ -66,7 +66,7 @@ class Anticheat extends PluginBase {
 
 		// duplicates: AntiVPN plugin by ReinfyTeam
 		if (($plugin = $this->getServer()->getPluginManager()->getPlugin("AntiVPN")) !== null) {
-			if(in_array($this->getDescription()->getAuthors(), $plugin->getDescription()->getAuthors())){
+			if(!in_array($this->getDescription()->getAuthors(), $plugin->getDescription()->getAuthors(), true)){
 				$this->getServer()->getPluginManager()->disablePlugin($plugin);
 				$this->getServer()->getLogger()->info(Zuri::PREFIX . " " . Zuri::ARROW . " " . TF::RED . $plugin->getDescription()->getFullName() . " has been disabled to prevent duplicate proxy api request.");
 			}
