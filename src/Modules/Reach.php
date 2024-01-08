@@ -70,7 +70,6 @@ class Reach extends Zuri implements Listener {
 	// V2 - just check again...
 	public function reachV2(EntityDamageEvent $event) {
 		if ($event instanceof EntityDamageByEntityEvent && $event->getEntity() instanceof Player && $event->getDamager() instanceof Player) {
-			// Use $event->getDamager() instead of $damager
 			if ($this->canBypass($event->getDamager())) {
 				return;
 			}
@@ -94,7 +93,6 @@ class Reach extends Zuri implements Listener {
 	// V3 - just checking again
 	public function reachV3(EntityDamageEvent $event) {
 		if ($event instanceof EntityDamageByEntityEvent && $event->getEntity() instanceof Player && $event->getDamager() instanceof Player) {
-			// Use $event->getDamager() instead of $damager
 			if ($this->canBypass($event->getDamager())) {
 				return;
 			}
